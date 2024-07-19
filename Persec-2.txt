@@ -1,0 +1,40 @@
+function sortArrayStrings(arr) {
+    // Custom sorting function
+    function customSort(a, b) {
+        // Extract letters and numbers from strings
+        const regex = /([A-Za-z]+)(\d+)/; // Regular expression to match letters and numbers
+        const aMatches = a.match(regex); // Array of matches for string 'a'
+        const bMatches = b.match(regex); // Array of matches for string 'b'
+			
+        // Extracting letters and numbers from the matches
+        const aLetters = aMatches[1]; // Letters from string 'a'
+        const aNumbers = parseInt(aMatches[2], 10); // Numbers from string 'a', converted to integer
+        
+        
+        const bLetters = bMatches[1]; // Letters from string 'b'
+        const bNumbers = parseInt(bMatches[2], 10); // Numbers from string 'b', converted to integer
+
+        // Compare based on letters first, then numbers if letters are the same
+        
+        if (aLetters !== bLetters) {
+            return aLetters.localeCompare(bLetters); // Compare letters alphabetically
+        } else {
+            return aNumbers - bNumbers; // Compare numbers numerically
+        }
+    }
+
+    // Sort the array using the custom sorting function
+    arr.sort(customSort);
+
+    return arr; // Return the sorted array
+}
+
+// Example :
+const arr1 = ["TH19", "SG20", "TH2"];
+const arr2 = ["TH10", "TH3Netflix", "TH1", "TH7"];
+
+console.log(sortArrayStrings(arr1)); // Output: ["SG20", "TH2", "TH19"]
+console.log(sortArrayStrings(arr2)); // Output: ["TH1", "TH3Netflix", "TH7", "TH10"]
+
+
+

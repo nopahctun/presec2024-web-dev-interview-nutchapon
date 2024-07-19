@@ -1,0 +1,38 @@
+SELECT
+  t2016.product_id,
+  t2016.product_name,
+  t2016.Total_quantity_product AS Total_quantity_2016,
+  t2017.Total_quantity_product AS Total_quantity_2017
+FROM
+  (
+    SELECT
+      products.product_id,
+      products.product_name,
+      SUM(order_details.quantity) AS Total_quantity_product
+    FROM orders
+      INNER JOIN order_details ON orders.order_id = order_details.order_id
+      INNER JOIN products ON order_details.product_id = products.product_id
+    WHERE YEAR(orders.order_date) = 2016
+    GROUP BY products.product_id, products.product_name
+    ORDER BY Total_quantity_product DESC
+    LIMIT 5
+  ) AS t2016
+INNER JOIN
+  (
+    SELECT
+      products.product_id,
+      products.product_name,
+      SUM(order_details.quantity) AS Total_quantity_product
+    FROM orders
+      INNER JOIN order_details ON orders.order_id = order_details.order_id
+      INNER JOIN products ON order_details.product_id = products.product_id
+    WHERE YEAR(orders.order_date) = 2017
+    GROUP BY products.product_id, products.product_name
+    ORDER BY Total_quantity_product DESC
+    LIMIT 5
+  ) AS t2017
+ON t2016.product_id = t2017.product_id
+ORDER BY
+  t2016.Total_quantity_product DESC,
+  t2017.Total_quantity_product DESC;
+

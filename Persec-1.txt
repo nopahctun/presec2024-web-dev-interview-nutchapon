@@ -1,0 +1,22 @@
+function hexToRgb(hex) {
+    // Normalize the input by removing the hash symbol and converting to lower case
+    hex = hex.replace('#', '').toLowerCase();
+
+    // Handle shorthand notation (#FFF)
+    if (hex.length === 3) {
+        hex = hex.split('').map(c => c + c).join('');
+    }
+
+    // Extract the red, green, and blue components
+    let r = parseInt(hex.slice(0, 2), 16);
+    let g = parseInt(hex.slice(2, 4), 16);
+    let b = parseInt(hex.slice(4, 6), 16);
+
+    // Return the result as an object
+    return { r: r, g: g, b: b };
+}
+
+// Example 
+console.log(hexToRgb("#FF9933"));  // Output: { r: 255, g: 153, b: 51 }
+console.log(hexToRgb("#FFF"));     // Output: { r: 255, g: 255, b: 255 }
+console.log(hexToRgb("#000"));     // Output: { r: 0, g: 0, b: 0 }

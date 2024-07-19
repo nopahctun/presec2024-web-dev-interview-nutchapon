@@ -1,0 +1,12 @@
+
+	SELECT
+      products.product_id,
+      products.product_name,
+      SUM(order_details.quantity) AS Total_quantity_product
+    FROM orders
+      INNER JOIN order_details ON orders.order_id = order_details.order_id
+      INNER JOIN products ON order_details.product_id = products.product_id
+    WHERE YEAR(orders.order_date) = 2016
+    GROUP BY products.product_id, products.product_name
+    ORDER BY Total_quantity_product DESC
+    LIMIT 5

@@ -1,0 +1,48 @@
+class ReverseEncoder {
+    // Helper function to swap characters based on the given mapping
+    swapCharacters(text) {
+        let swappedText = '';
+        for (let i = 0; i < text.length; i++) {
+            let char = text[i];
+            if (char >= 'a' && char <= 'z') {
+                // Calculate the new character by swapping with the corresponding character from the end of the alphabet
+                let newChar = String.fromCharCode('a'.charCodeAt(0) + ('z'.charCodeAt(0) - char.charCodeAt(0)));
+                swappedText += newChar;
+            } else {
+                // If the character is not in the range of 'a' to 'z', keep it as is
+                swappedText += char;
+            }
+        }
+        return swappedText;
+    }
+
+    encode(text) {
+        // Step 1: Swap characters as described
+        let encodedText = this.swapCharacters(text.toLowerCase());
+
+        // Step 2: Reverse the order of words
+        const reversedWords = encodedText.split(' ').reverse().join(' ');
+
+        return reversedWords;
+    }
+
+    decode(text) {
+        // Step 1: Reverse the order of words
+        const reversedWords = text.split(' ').reverse().join(' ');
+
+        // Step 2: Swap characters back to original
+        let decodedText = this.swapCharacters(reversedWords);
+
+        return decodedText;
+    }
+}
+
+// Example :
+const reverseEncoder = new ReverseEncoder();
+const encodedText = reverseEncoder.encode("Hello world");
+const decodedText = reverseEncoder.decode("dliow svool");
+
+console.log(`Encoded: ${encodedText}`); // Output: "dliow svool"
+console.log(`Decoded: ${decodedText}`); // Output: "Hello world"
+
+
